@@ -18,7 +18,7 @@ export abstract class AbstractBillService {
         const dir = `/${billId}.${image.name.split(".").at(-1)}`;
         const url = `${process.env.APP_DOMAIN}${dir}`;
 
-        billFindStatus.link = dir;
+        billFindStatus.link = `/images${dir}`;
         await BillRepository.save(billFindStatus);
         image.mv(`./data${dir}`, (error) => {
             if (error) {
