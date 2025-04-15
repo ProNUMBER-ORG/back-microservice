@@ -15,12 +15,12 @@ logger = get_logger("MAIN")
 class ReceiptProcessor:
     def __init__(self):
         logger.info("Init App")
-        self.rabbit_host = os.getenv("RABBIT_HOST", "rabbit")
-        self.rabbit_port = int(os.getenv("RABBIT_PORT", "5672"))
-        self.rabbit_user = os.getenv("RABBIT_USER")
-        self.rabbit_pass = os.getenv("RABBIT_PASS")
-        self.queue_listen = os.getenv("RABBIT_QUEUE_LISTENER")
-        self.queue_push = os.getenv("RABBIT_QUEUE_PUSHER")
+        self.rabbit_host = os.getenv("RABBITMQ_HOST", "rabbit")
+        self.rabbit_port = int(os.getenv("RABBITMQ_PORT", "5672"))
+        self.rabbit_user = os.getenv("RABBITMQ_USER")
+        self.rabbit_pass = os.getenv("RABBITMQ_PASSWORD")
+        self.queue_listen = os.getenv("RABBITMQ_QUEUE_LISTENER")
+        self.queue_push = os.getenv("RABBITMQ_QUEUE_PUSHER")
         self.connection = None
         self.channel = None
 

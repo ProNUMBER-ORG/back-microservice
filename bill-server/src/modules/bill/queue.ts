@@ -1,5 +1,5 @@
-import { QueueTags } from "src/common/enums/queue-tags";
-import logger from "src/core/logger";
+import { QueueTags } from "../../common/enums/queue-tags";
+import logger from "../../core/logger";
 import { channel } from "../../core/queue/driver";
 import { AbstractBillService, BillServiceInstance } from "./service";
 

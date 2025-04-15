@@ -1,5 +1,5 @@
-import { BillStatus } from "src/common/enums/bill-status";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BillStatus } from "../../common/enums/bill-status";
 
 @Entity()
 export class Bill {

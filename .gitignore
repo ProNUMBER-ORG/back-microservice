@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+.venv/
+pip-log.txt
+
+# Data and cache
+bill-parser/data/
+bill-server/data/
+tesseract_data/
+*.csv
+*.json
+!tsconfig**
+
+# Docker
+**/.env
+**/build/
+
+# Sys
+.DS_Store
+Thumbs.db
+
+# IDE & Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Experiments
+tesseract-api/
+
+# TypeScript / Node.js
+bill-server/dist/
+bill-server/node_modules/
+bill-server/build/
+
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Tests
+coverage/
+.nyc_output/
+
+# dotenv (except example)
+*.env
+!.env.example
+
+# Temp files
+.temp/
+.tmp/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Node.js diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

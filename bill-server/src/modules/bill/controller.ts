@@ -1,7 +1,7 @@
 import { boundClass } from "autobind-decorator";
 import { Request, Response } from "express";
-import { BaseController } from "src/common/types/controller";
-import { pushToQueue } from "src/core/queue/driver";
+import { BaseController } from "../../common/types/controller";
+import { pushToQueue } from "../../core/queue/driver";
 import { AbstractBillService, BillServiceInstance } from "./service";
 
 @boundClass

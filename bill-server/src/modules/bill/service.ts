@@ -1,9 +1,9 @@
 import { UploadedFile } from "express-fileupload";
-import { BillStatus } from "src/common/enums/bill-status";
-import { UpdateBill } from "src/common/types/queue";
-import { socketSend } from "src/core/http";
-import { Bill } from "src/entities/bill/entity";
-import { BillRepository } from "src/entities/bill/repository";
+import { BillStatus } from "../../common/enums/bill-status";
+import { UpdateBill } from "../../common/types/queue";
+import { socketSend } from "../../core/http";
+import { Bill } from "../../entities/bill/entity";
+import { BillRepository } from "../../entities/bill/repository";
 
 export abstract class AbstractBillService {
     async createBill(): Promise<Bill> {

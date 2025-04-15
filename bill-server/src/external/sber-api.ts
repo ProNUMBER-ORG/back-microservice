@@ -1,6 +1,6 @@
 import { boundClass } from "autobind-decorator";
 import axios from "axios";
-import { uuidGenerate } from "src/common/functions/generator";
+import { uuidGenerate } from "../common/functions/generator";
 import logger from "../core/logger";
 
 @boundClass
@@ -12,6 +12,10 @@ class GigaChat {
 
     private token: string;
 
+    constructor() {
+        this.auth();
+    }
+
     public async auth() {
         try {
             const headers = {
@@ -22,7 +26,7 @@ class GigaChat {
             };
             const response = await this.api.post("/v2/oauth", { scope: this.scope }, { headers });
             console.log(response);
-        } catch (error) {
+        } catch (error: Error | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
             console.log(error);
         }

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { idDto } from "src/common/dto/id";
-import { PayloadKey } from "src/common/enums/validation";
+import { idDto } from "../../common/dto/id";
+import { PayloadKey } from "../../common/enums/validation";
 import { validate } from "../../common/middlewares/validator";
 import controller from "./controller";
 

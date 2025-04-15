@@ -1,0 +1,30 @@
+name: NUMBER-CICD
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build-and-deploy:
+        runs-on: self-hosted
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+              with:
+                  ref: master
+
+            - name: Prepare environment
+              run: |
+                  cp ../.env ./
+
+            - name: Deploy app
+              run: |
+                  docker compose down || true
+                  docker compose --env-file .env up -d --build
+
+            - name: Clean up
+              run: |
+                  docker image prune -f
+                  find . -mindepth 1 -not -path "./.git*" -exec rm -rf {} +

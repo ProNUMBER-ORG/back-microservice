@@ -1,0 +1,76 @@
+# version: '3.8'
+
+services:
+  bill-postgres:
+    image: postgres:13-alpine
+    container_name: bill-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - hackaton-net
+
+  bill-rabbit:
+    image: rabbitmq:3.11-management-alpine
+    container_name: bill-rabbit
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=$RABBITMQ_USER
+      - RABBITMQ_DEFAULT_PASS=$RABBITMQ_PASSWORD
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - hackaton-net
+
+  bill-parser:
+    container_name: bill-parser
+    depends_on:
+      - bill-postgres
+      - bill-rabbit
+    restart: unless-stopped
+    build:
+      context: ./bill-parser
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    networks:
+      - hackaton-net
+    entrypoint: ["python", "src/app.py"]
+    environment:
+      - PYTHONUNBUFFERED=1
+  
+  bill-server:
+    container_name: bill-server
+    depends_on:
+      - bill-postgres
+      - bill-rabbit
+    build:
+        context: ./bill-server
+        dockerfile: Dockerfile
+    env_file:
+        - .env
+    command: sh -c "npm run start:prod"
+    restart: always
+    ports:
+        - ${APP_PORT}:${APP_PORT}
+    networks:
+        - hackaton-net
+
+networks:
+  hackaton-net:
+    driver: "bridge"
+
+volumes:
+  rabbitmq_data:
+  postgres_data:
