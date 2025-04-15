@@ -42,8 +42,6 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    volumes:
-      - /var/www/hackaton-images:/app/data
     networks:
       - hackaton-net
     entrypoint: ["python", "src/app.py"]
@@ -60,6 +58,8 @@ services:
         dockerfile: Dockerfile
     env_file:
         - .env
+    volumes:
+      - /var/www/hackaton-images:/app/data
     command: sh -c "npm run start:prod"
     restart: always
     ports:
