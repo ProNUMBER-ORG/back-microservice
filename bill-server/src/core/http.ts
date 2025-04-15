@@ -40,7 +40,7 @@ export async function runHttpServer(routes: IRouter[], socketInitter: (socket: S
             abortOnLimit: true
         })
     );
-    app.use(express.static("data"));
+    app.use("/images", express.static("data"));
 
     routes.forEach(({ prefix, instance }) => app.use(prefix, instance));
     app.use("/docs", SwaggerUI.serve, SwaggerUI.setup(swaggerDocument));
