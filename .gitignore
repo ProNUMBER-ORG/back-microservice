@@ -15,6 +15,7 @@ tesseract_data/
 *.csv
 *.json
 !tsconfig**
+!package*.json
 
 # Docker
 **/.env
