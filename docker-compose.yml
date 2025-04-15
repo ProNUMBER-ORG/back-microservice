@@ -43,7 +43,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./data:/app/data
+      - /var/www/hackaton-images:/app/data
     networks:
       - hackaton-net
     entrypoint: ["python", "src/app.py"]
