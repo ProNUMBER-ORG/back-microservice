@@ -3,7 +3,7 @@ name: NUMBER-CICD
 on:
     push:
         branches:
-            - master
+            - main
 
 jobs:
     build-and-deploy:
@@ -13,7 +13,7 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
               with:
-                  ref: master
+                  ref: main
 
             - name: Prepare environment
               run: |
