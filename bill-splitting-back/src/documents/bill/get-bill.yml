@@ -1,0 +1,46 @@
+/bill/{id}:
+  get:
+    summary: Get bill
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Bill id
+    responses:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                status:
+                  type: number
+                  enum: [1, 2, 3, 4]
+                  description: |
+                    Statuses:
+                      New = 1,
+                      Pending = 2,
+                      Error = 3,
+                      Success = 4
+                link:
+                  type: string
+                  format: uri
+                additional:
+                  type: object
+                error:
+                  type: object
+                  properties:
+                    reason:
+                      type: string
+                      example: can not process
+      "404":
+        description: Not found
+      "500":
+        description: Something went wrong

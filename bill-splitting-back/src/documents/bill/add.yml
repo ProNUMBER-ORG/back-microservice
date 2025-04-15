@@ -1,0 +1,32 @@
+/bill/upload:
+  post:
+    summary: upload image
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              image:
+                type: string
+                format: binary
+                description: BillImage
+    responses:
+      "201":
+        description: Success
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                url:
+                  type: string
+                  format: uri
+      "400":
+        description: NotFound
+      "500":
+        description: Something went wrong

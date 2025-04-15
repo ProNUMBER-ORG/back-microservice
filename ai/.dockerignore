@@ -1,0 +1,16 @@
+**/.git
+**/.dockerignore
+**/.gitignore
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.DS_Store
+**/venv
+**/env
+**/.env
+**/data/*.jpg
+**/tesseract_data/*
+**/logs
+**/*.log
+**/tmp

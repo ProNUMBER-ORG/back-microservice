@@ -1,0 +1,32 @@
+/bill/status/{id}:
+  get:
+    summary: Get bill image processing status
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Bill id
+    responses:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  enum: [1, 2, 3, 4]
+                  description: |
+                    Statuses:
+                      New = 1,
+                      Pending = 2,
+                      Error = 3,
+                      Success = 4
+      "404":
+        description: Not found
+      "500":
+        description: Something went wrong
