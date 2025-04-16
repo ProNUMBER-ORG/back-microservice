@@ -1,5 +1,6 @@
 import "reflect-metadata";
 
+import path from "path";
 import { runCron } from "./core/cron";
 import { runSqlDriver } from "./core/db/sql/driver";
 import { runHttpServer } from "./core/http";
@@ -9,6 +10,8 @@ import { CronSchedule } from "./modules/_cron";
 import { onConnection as connectionHandler } from "./modules/_event";
 import { QueueRouting } from "./modules/_queue";
 import { HttpRouting } from "./modules/_routes";
+
+process.env.NODE_EXTRA_CA_CERTS = path.resolve(__dirname, "certs");
 
 void (async function () {
     await runSqlDriver();

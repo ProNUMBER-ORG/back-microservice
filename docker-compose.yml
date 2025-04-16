@@ -60,6 +60,7 @@ services:
         - .env
     volumes:
       - /var/www/hackaton-images:/app/data
+      - /usr/local/share/ca-certificates/russian-trusted:/app/certs
     command: sh -c "npm run start:prod"
     restart: always
     ports:
