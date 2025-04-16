@@ -13,8 +13,8 @@ class GigaChat {
     private readonly authKey = process.env.SBER_AUTH_KEY;
     private readonly clientId = process.env.SBER_CLIENT_ID;
 
-    private readonly rootCA = readFileSync("/certs/russian_trusted_root_ca_pem.crt");
-    private readonly subCA = readFileSync("/certs/russian_trusted_sub_ca_pem.crt");
+    private readonly rootCA = readFileSync("/app/certs/russian_trusted_root_ca_pem.crt");
+    private readonly subCA = readFileSync("/app/certs/russian_trusted_sub_ca_pem.crt");
 
     private token: string;
 
