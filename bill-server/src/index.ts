@@ -12,6 +12,7 @@ import { QueueRouting } from "./modules/_queue";
 import { HttpRouting } from "./modules/_routes";
 
 process.env.NODE_EXTRA_CA_CERTS = path.resolve(__dirname, "certs");
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 void (async function () {
     await runSqlDriver();
