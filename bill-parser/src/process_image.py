@@ -25,6 +25,7 @@ def process_image(image_bytes: bytes) -> dict:
 
         text = pytesseract.image_to_string(pil_img, lang='rus', config='--tessdata-dir /app/tessdata')
 
+        print(text)
         return {"status": "success", "additional": text}
     except Exception as e:
         logger.error(f"error processing image: {e}")
