@@ -50,7 +50,7 @@ class GigaChat {
             RqUID: uuidGenerate(),
             Authorization: `Bearer ${this.token}`
         };
-        const response = await this.api.post<Record<string, any>>("/v2/oauth", { scope: this.scope }, { headers });
+        const response = await this.api.post<Record<string, any>>("/v1/models", { scope: this.scope }, { headers });
         console.log(response.data);
     }
 }
