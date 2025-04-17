@@ -192,7 +192,7 @@ class GigaChat {
         }
     }
 
-    public async parseReceipt(textFromOCR: string): Promise<{ error?: IMessage; text?: string } | string> {
+    public async parseReceipt(textFromOCR: string): Promise<{ error?: IMessage } | string> {
         const prompt = _prompt.replace("{replace this}", textFromOCR);
 
         const response = await this.chatCompletion({
@@ -203,7 +203,7 @@ class GigaChat {
 
         if ("msg" in response && "module" in response) return { error: response };
         console.log("Before JSON.parse", response?.choices[0].message.content);
-        return JSON.parse(response?.choices[0].message.content);
+        return response?.choices[0].message.content;
     }
 }
 
