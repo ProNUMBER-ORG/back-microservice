@@ -14,12 +14,11 @@ class QueueRouter {
                 case QueueTags.UPDATE_BILL:
                     await this.service.updateBill(id, data);
                     break;
-                // case QueueTags.PROCESS_TEXT:
-                //     await this.service.parseData(id, data);
-                //     break;
+                case QueueTags.PROCESS_TEXT:
+                    await this.service.parseData(id, data);
+                    break;
                 default:
                     logger.warn(`Unknown tag received: ${tag}`);
-                    throw new Error(JSON.stringify(ctx));
             }
         } catch (error) {
             logger.error(`Error processing message ${id}:`, error);
