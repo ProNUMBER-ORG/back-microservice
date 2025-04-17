@@ -30,6 +30,7 @@ class QueueRouter {
         channel.consume("bill-server", async (message) => {
             try {
                 const content = message.content.toString();
+                console.log(content);
                 const collection = JSON.parse(content);
                 for (const ctx of collection) {
                     await this.processMessage(ctx);
