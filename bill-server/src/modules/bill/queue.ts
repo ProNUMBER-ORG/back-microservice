@@ -35,7 +35,7 @@ class QueueRouter {
                     await this.processMessage(ctx);
                 }
             } catch (error) {
-                logger.error({ module: "queue-parser", msg: "Error processing queue message:" + error, additional: content });
+                logger.error({ module: "queue-parser", msg: "Error processing queue message:" + error });
             }
             channel.ack(message);
         });
