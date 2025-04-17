@@ -37,7 +37,5 @@ def process_image(image_bytes: bytes) -> dict:
 
 
 def sanitize_text(text: str) -> str:
-    # Убираем невидимые/неотображаемые символы (например, управляющие)
     cleaned = ''.join(ch for ch in text if unicodedata.category(ch)[0] != 'C' or ch in '\n\t')
-    # Экранируем для безопасной JSON-сериализации (необязательно, но можно)
     return html.escape(cleaned)
