@@ -19,8 +19,8 @@ class GigaChat {
     private token: string;
 
     constructor() {
-        this.auth();
         globalAgent.options.ca = [this.rootCA, this.subCA];
+        this.auth();
     }
 
     public async auth() {
