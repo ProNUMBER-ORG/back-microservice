@@ -48,6 +48,8 @@ def process_image(image_bytes: bytes) -> dict:
             lang='rus+eng',
             config=custom_config
         )
+
+        logger.info(text)
         
         # Постобработка текста
         cleaned_text = '\n'.join([line.strip() for line in text.split('\n') if line.strip()])
