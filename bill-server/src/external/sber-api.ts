@@ -33,13 +33,26 @@ class GigaChat {
                 RqUID: uuidGenerate(),
                 Authorization: `Basic ${authKey}`
             };
-            const response = await this.api.post("/v2/oauth", new URLSearchParams({ scope: this.scope }).toString(), { headers });
-            // const response = await this.api.post("/v2/oauth", { scope: this.scope }, { headers });
-            console.log(response);
+            const response = await this.api.post<{ access_token: string; expires_at: number }>("/v2/oauth", { scope: this.scope }, { headers });
+
+            this.token = response.data.access_token;
+            logger.info({ module: "gigachat-api", msg: "Bearer token updated" });
+            this.wasd();
         } catch (error: Error | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
             console.log(error);
         }
+    }
+
+    public async wasd() {
+        const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json",
+            RqUID: uuidGenerate(),
+            Authorization: `Bearer ${this.token}`
+        };
+        const response = await this.api.post<Record<string, any>>("/v2/oauth", { scope: this.scope }, { headers });
+        console.log(response.data);
     }
 }
 
