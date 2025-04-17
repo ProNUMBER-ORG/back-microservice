@@ -12,6 +12,7 @@ class GigaChat {
     private readonly scope = process.env.SBER_SCOPE;
     private readonly authKey = process.env.SBER_AUTH_KEY;
     private readonly clientId = process.env.SBER_CLIENT_ID;
+    private readonly clientSecret = process.env.SBER_CLIENT_SECRET;
 
     private readonly rootCA = readFileSync("/app/certs/russian_trusted_root_ca_pem.crt");
     private readonly subCA = readFileSync("/app/certs/russian_trusted_sub_ca_pem.crt");
@@ -25,7 +26,7 @@ class GigaChat {
 
     public async auth() {
         try {
-            const authKey = Buffer.from(`${this.clientId}:${this.authKey}`).toString('base64');
+            const authKey = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString("base64");
             const headers = {
                 "Content-Type": "application/x-www-form-urlencoded",
                 Accept: "application/json",
