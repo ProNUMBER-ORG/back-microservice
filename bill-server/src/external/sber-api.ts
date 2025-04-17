@@ -191,7 +191,7 @@ class GigaChat {
         }
     }
 
-    public async parseReceipt(textFromOCR: string) {
+    public async parseReceipt(textFromOCR: string): Promise<{ error: IMessage } | Record<string, any>> {
         const prompt = _prompt.replace("{replace this}", textFromOCR);
 
         const response = await this.chatCompletion({
@@ -200,7 +200,7 @@ class GigaChat {
             temperature: 0.3
         });
 
-        if ("msg" in response && "module" in response) return { response, error: true };
+        if ("msg" in response && "module" in response) return { error: response };
         return JSON.parse(response?.choices[0].message.content);
     }
 }
