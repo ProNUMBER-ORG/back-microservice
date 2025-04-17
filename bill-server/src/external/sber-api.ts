@@ -61,7 +61,7 @@ class GigaChat {
                 Authorization: `Bearer ${this.token.trim()}`,
                 "Content-Type": "application/json" // Явно указываем для GET
             };
-            const response = await this.api.get(`${this.apiUrl}/v2/models`, { headers });
+            const response = await this.api.get(`${this.apiUrl}/v1/models`, { headers });
             console.log(response.data);
         } catch (error: Error | AxiosError | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
