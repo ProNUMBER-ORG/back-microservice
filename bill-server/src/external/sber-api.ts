@@ -31,8 +31,7 @@ const _prompt = `
 
 Текст чека:
 {replace this}
-`
-
+`;
 
 type Model = {
     id: string;
@@ -196,17 +195,14 @@ class GigaChat {
     public async parseReceipt(textFromOCR: string): Promise<{ error?: IMessage; text?: string } | string> {
         const prompt = _prompt.replace("{replace this}", textFromOCR);
 
-        console.log(prompt);
-
         const response = await this.chatCompletion({
             model: process.env.GIGACHAT_DEFAULT_MODEL,
             messages: [{ role: "user", content: prompt }],
             temperature: 0.3
         });
 
-        
         if ("msg" in response && "module" in response) return { error: response };
-        console.log("Before JSON.parse", response?.choices[0].message.content)
+        console.log("Before JSON.parse", response?.choices[0].message.content);
         return JSON.parse(response?.choices[0].message.content);
     }
 }

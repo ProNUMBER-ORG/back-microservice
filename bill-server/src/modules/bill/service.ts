@@ -59,6 +59,11 @@ export abstract class AbstractBillService {
     }
 
     private cleanJsonString(text: string): string {
+        console.log("--------");
+        console.log(text);
+        console.log(typeof text);
+        console.log("--------");
+
         const startIndex = text.indexOf("[");
         const endIndex = text.lastIndexOf("]");
         if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) return "";
