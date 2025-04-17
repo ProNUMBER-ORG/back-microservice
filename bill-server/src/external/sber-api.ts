@@ -175,8 +175,6 @@ class GigaChat {
                 throw new Error("Invalid API response structure");
             }
 
-            console.log(response.data)
-
             return response.data;
         } catch (error: AxiosError | Error | any) {
             const errorObj: IMessage = { module: "gigachat-api", msg: "" };
@@ -204,7 +202,9 @@ class GigaChat {
             temperature: 0.3
         });
 
+        
         if ("msg" in response && "module" in response) return { error: response };
+        console.log(response?.choices[0].message.content)
         return JSON.parse(response?.choices[0].message.content);
     }
 }
