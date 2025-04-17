@@ -1,5 +1,5 @@
 import { boundClass } from "autobind-decorator";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { readFileSync } from "fs";
 import { globalAgent } from "https";
 import { uuidGenerate } from "../common/functions/generator";
@@ -22,7 +22,7 @@ class GigaChat {
     constructor() {
         globalAgent.options.ca = [this.rootCA, this.subCA];
         this.auth().then(() =>
-            this.getModels().catch((error) => logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" }))
+            this.getModels().catch((error: AxiosError) => logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong", additional: error }))
         );
     }
 
