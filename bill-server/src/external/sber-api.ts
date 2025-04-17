@@ -6,7 +6,8 @@ import { uuidGenerate } from "../common/functions/generator";
 import logger, { IMessage } from "../core/logger";
 
 const _prompt = `
-Проанализируй текст чека и преобразуй его в JSON-массив строго в следующем формате:
+Ответь строго в формате JSON-массива без каких-либо пояснений, текста до или после. Не используй \`\`\`, комментарии, заголовки и т.п.
+
 [
   {"name": "название товара", "cost": число},
   ...
@@ -28,9 +29,10 @@ const _prompt = `
   {"name": "Яблоки Гренни Смит кг", "cost": 129.99}
 ]
 
-Текст чека для обработки:
+Текст чека:
 {replace this}
-`;
+`
+
 
 type Model = {
     id: string;

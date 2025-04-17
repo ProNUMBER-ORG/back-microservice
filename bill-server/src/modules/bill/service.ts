@@ -59,18 +59,16 @@ export abstract class AbstractBillService {
     }
 
     private cleanJsonString(text: string): string {
-        // let cleanedText = text.replace(/```json[\s\S]*?```/g, "").trim();
-        // cleanedText = cleanedText.replace(/[`\x27]/g, "");
-        // cleanedText = cleanedText
-        //     .replace(/&amp;/g, "&")
-        //     .replace(/&quot;/g, '"')
-        //     .replace(/&#x27;/g, "'");
-
-        // return cleanedText;
-        return text
-            .replace(/```json[\s\S]*?```/g, "")
-            .trim()
-            .replace(/[`\x27]/g, "")
+        let cleanedText = text.trim();
+    
+        const startIndex = cleanedText.indexOf("[");
+        const endIndex = cleanedText.lastIndexOf("]");
+        if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) return "";
+    
+        cleanedText = cleanedText.substring(startIndex, endIndex + 1);
+    
+        return cleanedText
+            .replace(/[`\x27]/g, "") 
             .replace(/&amp;/g, "&")
             .replace(/&quot;/g, '"')
             .replace(/&#x27;/g, "'");
