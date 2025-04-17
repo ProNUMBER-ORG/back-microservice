@@ -84,6 +84,7 @@ export abstract class AbstractBillService {
         const response = await gigaChatApi.parseReceipt(additional);
         if (typeof response != "string" && response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
         else {
+            console.log(response)
             const rawText = typeof response != "string" ? response?.text : response;
             const extracted = this.cleanJsonString(rawText);
 
