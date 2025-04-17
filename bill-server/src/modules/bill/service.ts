@@ -58,9 +58,22 @@ export abstract class AbstractBillService {
         return billFindStatus;
     }
 
-    private extractJsonBlock(text: string): string | null {
-        const match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
-        return match ? match[1].trim() : null;
+    private cleanJsonString(text: string): string {
+        // let cleanedText = text.replace(/```json[\s\S]*?```/g, "").trim();
+        // cleanedText = cleanedText.replace(/[`\x27]/g, "");
+        // cleanedText = cleanedText
+        //     .replace(/&amp;/g, "&")
+        //     .replace(/&quot;/g, '"')
+        //     .replace(/&#x27;/g, "'");
+
+        // return cleanedText;
+        return text
+            .replace(/```json[\s\S]*?```/g, "")
+            .trim()
+            .replace(/[`\x27]/g, "")
+            .replace(/&amp;/g, "&")
+            .replace(/&quot;/g, '"')
+            .replace(/&#x27;/g, "'");
     }
 
     async parseData(id: string, payload: { status: BillStatus; additional: string }) {
@@ -72,7 +85,7 @@ export abstract class AbstractBillService {
         if (typeof response != "string" && response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
         else {
             const rawText = typeof response != "string" ? response?.text : response;
-            const extracted = this.extractJsonBlock(rawText);
+            const extracted = this.cleanJsonString(rawText);
 
             if (!extracted) {
                 await this.updateBill(id, {
