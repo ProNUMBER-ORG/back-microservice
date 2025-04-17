@@ -25,13 +25,15 @@ class GigaChat {
 
     public async auth() {
         try {
+            const authKey = Buffer.from(`${this.clientId}:${this.authKey}`).toString('base64');
             const headers = {
                 "Content-Type": "application/x-www-form-urlencoded",
                 Accept: "application/json",
                 RqUID: uuidGenerate(),
-                Authorization: `Basic ${this.authKey}`
+                Authorization: `Basic ${authKey}`
             };
-            const response = await this.api.post("/v2/oauth", { scope: this.scope }, { headers });
+            const response = await this.api.post("/v2/oauth", new URLSearchParams({ scope: this.scope }).toString(), { headers });
+            // const response = await this.api.post("/v2/oauth", { scope: this.scope }, { headers });
             console.log(response);
         } catch (error: Error | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
