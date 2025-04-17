@@ -56,8 +56,6 @@ class ReceiptProcessor:
         else:
             self.push_message(id=data.get("id"),tag=QueueTags.get("PROCESS_TEXT"), status=BillStatus.get("Success"), additional=result.get("additional"))
 
-
-
     def receive_msg(self, ch, method, properties, body: str):
         try:
             message = json.loads(body.decode("utf-8"))
