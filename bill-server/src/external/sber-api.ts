@@ -21,7 +21,7 @@ class GigaChat {
 
     constructor() {
         globalAgent.options.ca = [this.rootCA, this.subCA];
-        this.auth();
+        this.auth().then(() => this.getModels());
     }
 
     public async auth() {
@@ -37,7 +37,6 @@ class GigaChat {
 
             this.token = response.data.access_token;
             logger.info({ module: "gigachat-api", msg: "Bearer token updated" });
-            this.getModels();
         } catch (error: Error | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
             console.log(error);
