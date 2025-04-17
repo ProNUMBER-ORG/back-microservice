@@ -21,11 +21,7 @@ class GigaChat {
 
     constructor() {
         globalAgent.options.ca = [this.rootCA, this.subCA];
-        this.auth().then(() =>
-            this.getModels().catch((error: AxiosError) =>
-                logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong", additional: error })
-            )
-        );
+        this.auth().then(() => this.getModels());
     }
 
     public async auth() {
@@ -41,21 +37,26 @@ class GigaChat {
 
             this.token = response.data.access_token;
             logger.info({ module: "gigachat-api", msg: "Bearer token updated" });
-        } catch (error: Error | any) {
+        } catch (error: Error | AxiosError | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
             console.log(error);
         }
     }
 
     public async getModels() {
-        const headers = {
-            Accept: "application/json",
-            RqUID: uuidGenerate(),
-            Authorization: `Bearer ${this.token.trim()}`,
-            "Content-Type": "application/json" // Явно указываем для GET
-        };
-        const response = await this.api.get("/v2/models", { headers });
-        console.log(response.data);
+        try {
+            const headers = {
+                Accept: "application/json",
+                RqUID: uuidGenerate(),
+                Authorization: `Bearer ${this.token.trim()}`,
+                "Content-Type": "application/json" // Явно указываем для GET
+            };
+            const response = await this.api.get("/v2/models", { headers });
+            console.log(response.data);
+        } catch (error: Error | AxiosError | any) {
+            logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
+            console.log(error);
+        }
     }
 }
 
