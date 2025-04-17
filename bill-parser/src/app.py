@@ -74,7 +74,7 @@ class ReceiptProcessor:
         self.channel.basic_publish(
             exchange='',
             routing_key=self.queue_push,
-            body=json.dumps([output_msg]),
+            body=json.dumps([output_msg], ensure_ascii=False).encode("utf-8"),
             properties=pika.BasicProperties(
                 delivery_mode=2,
             )
