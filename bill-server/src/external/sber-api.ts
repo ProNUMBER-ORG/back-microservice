@@ -194,6 +194,8 @@ class GigaChat {
     public async parseReceipt(textFromOCR: string): Promise<{ error?: IMessage; text?: string } | string> {
         const prompt = _prompt.replace("{replace this}", textFromOCR);
 
+        console.log(prompt);
+
         const response = await this.chatCompletion({
             model: process.env.GIGACHAT_DEFAULT_MODEL,
             messages: [{ role: "user", content: prompt }],
