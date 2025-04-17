@@ -61,6 +61,8 @@ export abstract class AbstractBillService {
     async parseData(id: string, payload: { status: BillStatus; additional: string }) {
         const { status, additional } = payload;
 
+        console.log(additional);
+
         const response = await gigaChatApi.parseReceipt(additional);
         if (response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
         else await this.updateBill(id, { status, additional: response });
