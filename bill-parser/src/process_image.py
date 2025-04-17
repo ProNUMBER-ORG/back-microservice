@@ -52,6 +52,8 @@ def process_image(image_bytes: bytes) -> dict:
         # Постобработка текста
         cleaned_text = '\n'.join([line.strip() for line in text.split('\n') if line.strip()])
         
+        logger.info(cleaned_text)
+
         return {"status": "success", "additional": cleaned_text}
     except Exception as e:
         logger.error(f"Error processing image: {str(e)}", exc_info=True)
