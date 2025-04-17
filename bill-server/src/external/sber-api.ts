@@ -48,7 +48,13 @@ class GigaChat {
     }
 
     public async getModels() {
-        const response = await this.api.get("/v2/models", { headers: { Authorization: `Bearer ${this.token}` } });
+        const headers = {
+            Accept: "application/json",
+            RqUID: uuidGenerate(),
+            Authorization: `Bearer ${this.token.trim()}`,
+            "Content-Type": "application/json" // Явно указываем для GET
+        };
+        const response = await this.api.get("/v2/models", { headers });
         console.log(response.data);
     }
 }
