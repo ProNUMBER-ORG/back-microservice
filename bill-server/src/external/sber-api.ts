@@ -21,7 +21,9 @@ class GigaChat {
 
     constructor() {
         globalAgent.options.ca = [this.rootCA, this.subCA];
-        this.auth().then(() => this.getModels());
+        this.auth().then(() =>
+            this.getModels().catch((error) => logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" }))
+        );
     }
 
     public async auth() {
