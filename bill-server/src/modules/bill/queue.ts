@@ -28,15 +28,14 @@ class QueueRouter {
 
     route = () => {
         channel.consume("bill-server", async (message) => {
+            const content = message.content.toString();
             try {
-                const content = message.content.toString();
-                console.log(content);
                 const collection = JSON.parse(content);
                 for (const ctx of collection) {
                     await this.processMessage(ctx);
                 }
             } catch (error) {
-                logger.error("Error processing queue message:", error);
+                logger.error({ module: "queue-parser", msg: "Error processing queue message:" + error, additional: content });
             }
             channel.ack(message);
         });
