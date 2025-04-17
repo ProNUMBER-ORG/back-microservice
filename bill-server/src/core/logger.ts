@@ -1,20 +1,20 @@
 import winston from "winston";
 const { combine, timestamp, printf } = winston.format;
 
-export type Message = {
+export interface IMessage {
     module: string;
     msg: string;
-    additional?: string;
-};
+    additional?: any;
+}
 
-function isMessage(message: string | Message): message is Message {
+function isMessage(message: string | IMessage): message is IMessage {
     return typeof message !== "string" && "module" in message && "msg" in message;
 }
 
 type Log = {
     level: string;
     timestamp: string;
-    message: Message | string;
+    message: IMessage | string;
 };
 
 const logFormat = printf((info) => {

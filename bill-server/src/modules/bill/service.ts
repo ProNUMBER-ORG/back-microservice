@@ -4,6 +4,7 @@ import { UpdateBill } from "../../common/types/queue";
 import { socketSend } from "../../core/http";
 import { Bill } from "../../entities/bill/entity";
 import { BillRepository } from "../../entities/bill/repository";
+// import gigaChatApi from "../../external/sber-api"
 
 export abstract class AbstractBillService {
     async createBill(): Promise<Bill> {
@@ -59,8 +60,10 @@ export abstract class AbstractBillService {
 
     async parseData(id: string, payload: any) {
         const { status, ...data } = payload;
-        console.log(data.additional);
-        console.log(status);
+
+        console.log(data);
+
+        // await gigaChatApi.parseReceipt()
     }
 }
 
