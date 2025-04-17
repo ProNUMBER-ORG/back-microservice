@@ -58,14 +58,43 @@ export abstract class AbstractBillService {
         return billFindStatus;
     }
 
+    private extractJsonBlock(text: string): string | null {
+        const match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+        return match ? match[1].trim() : null;
+    }
+
     async parseData(id: string, payload: { status: BillStatus; additional: string }) {
         const { status, additional } = payload;
 
-        console.log(additional);
+        console.log("RAW ADDITIONAL:", additional);
 
         const response = await gigaChatApi.parseReceipt(additional);
         if (response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
-        else await this.updateBill(id, { status, additional: response });
+        else {
+            const rawText = response?.text ?? response;
+            const extracted = this.extractJsonBlock(rawText);
+
+            if (!extracted) {
+                await this.updateBill(id, {
+                    status: BillStatus.Error,
+                    error: { message: "Cannot parse response", response }
+                });
+                return;
+            }
+
+            let parsed: any;
+            try {
+                parsed = JSON.parse(extracted);
+            } catch (err) {
+                await this.updateBill(id, {
+                    status: BillStatus.Error,
+                    error: `Ошибка парсинга JSON: ${(err as Error).message}`
+                });
+                return;
+            }
+
+            await this.updateBill(id, { status, additional: parsed });
+        }
     }
 }
 
