@@ -22,7 +22,9 @@ class GigaChat {
     constructor() {
         globalAgent.options.ca = [this.rootCA, this.subCA];
         this.auth().then(() =>
-            this.getModels().catch((error: AxiosError) => logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong", additional: error }))
+            this.getModels().catch((error: AxiosError) =>
+                logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong", additional: error })
+            )
         );
     }
 
@@ -46,12 +48,7 @@ class GigaChat {
     }
 
     public async getModels() {
-        const headers = {
-            Accept: "application/json",
-            RqUID: uuidGenerate(),
-            Authorization: `Bearer ${this.token}`
-        };
-        const response = await this.api.get<Record<string, any>>("/v1/models", { headers });
+        const response = await this.api.get("/v2/models", { headers: { Authorization: `Bearer ${this.token}` } });
         console.log(response.data);
     }
 }

@@ -25,7 +25,7 @@ const logFormat = printf((info) => {
         const { module, msg, additional } = message;
         logMessage = `${module.toUpperCase()} | ${msg}`;
 
-        if (additional) logMessage += `| Additional: ${JSON.stringify(additional)}`;
+        if (additional) logMessage += `| Additional: ${JSON.stringify(additional, null, 2)}`;
     } else logMessage = message as string;
 
     return `${timestamp} | ${level.toLowerCase()} | ${logMessage}`;
