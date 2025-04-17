@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 from PIL import Image
 import pytesseract
+import html
+import unicodedata
 from logger import get_logger
 
 logger = get_logger("IMAGE_PROCESSOR")
@@ -26,7 +28,16 @@ def process_image(image_bytes: bytes) -> dict:
         text = pytesseract.image_to_string(pil_img, lang='rus', config='--tessdata-dir /app/tessdata')
 
         print(text)
-        return {"status": "success", "additional": text}
+        cleaned_text = sanitize_text(text)
+        print(cleaned_text)
+        return {"status": "success", "additional": cleaned_text}
     except Exception as e:
         logger.error(f"error processing image: {e}")
         return {"status": "error", "message": str(e)}
+
+
+def sanitize_text(text: str) -> str:
+    # Убираем невидимые/неотображаемые символы (например, управляющие)
+    cleaned = ''.join(ch for ch in text if unicodedata.category(ch)[0] != 'C' or ch in '\n\t')
+    # Экранируем для безопасной JSON-сериализации (необязательно, но можно)
+    return html.escape(cleaned)
