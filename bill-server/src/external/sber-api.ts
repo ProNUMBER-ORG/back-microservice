@@ -169,7 +169,7 @@ class GigaChat {
                 model: this.validateModel(params.model)
             };
 
-            const response = await this.api.post<ChatCompletionResult>(this.apiUrl, requestBody, { headers });
+            const response = await this.api.post<ChatCompletionResult>(`${this.apiUrl}/v1/chat/completions`, requestBody, { headers });
 
             if (!response.data?.choices?.[0]?.message?.content) {
                 throw new Error("Invalid API response structure");
@@ -184,7 +184,7 @@ class GigaChat {
                 errorObj.additional = { status: error.response?.status, data: errorData, config: error.config };
             } else {
                 errorObj.msg = error?.message || "Something went wrong";
-                console.log(error);
+                errorObj.additional = error;
             }
             logger.error(errorObj);
             return errorObj;
