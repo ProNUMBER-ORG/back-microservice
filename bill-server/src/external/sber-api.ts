@@ -7,12 +7,15 @@ import logger from "../core/logger";
 
 @boundClass
 class GigaChat {
-    private readonly api = axios.create({ baseURL: process.env.SBER_URL });
+    private readonly api = axios.create();
 
-    private readonly scope = process.env.SBER_SCOPE;
-    private readonly authKey = process.env.SBER_AUTH_KEY;
-    private readonly clientId = process.env.SBER_CLIENT_ID;
-    private readonly clientSecret = process.env.SBER_CLIENT_SECRET;
+    private readonly authUrl = process.env.GIGACHAT_AUTH_URL;
+    private readonly apiUrl = process.env.GIGACHAT_API_URL;
+
+    private readonly scope = process.env.GIGACHAT_SCOPE;
+    private readonly authKey = process.env.GIGACHAT_AUTH_KEY;
+    private readonly clientId = process.env.GIGACHAT_CLIENT_ID;
+    private readonly clientSecret = process.env.GIGACHAT_CLIENT_SECRET;
 
     private readonly rootCA = readFileSync("/app/certs/russian_trusted_root_ca_pem.crt");
     private readonly subCA = readFileSync("/app/certs/russian_trusted_sub_ca_pem.crt");
@@ -33,7 +36,11 @@ class GigaChat {
                 RqUID: uuidGenerate(),
                 Authorization: `Basic ${authKey}`
             };
-            const response = await this.api.post<{ access_token: string; expires_at: number }>("/v2/oauth", { scope: this.scope }, { headers });
+            const response = await this.api.post<{ access_token: string; expires_at: number }>(
+                `${this.authUrl}/v2/oauth`,
+                { scope: this.scope },
+                { headers }
+            );
 
             this.token = response.data.access_token;
             logger.info({ module: "gigachat-api", msg: "Bearer token updated" });
@@ -45,13 +52,16 @@ class GigaChat {
 
     public async getModels() {
         try {
+            if (!this.token) throw new Error("Token not initialized");
+
             const headers = {
                 Accept: "application/json",
+                maxBodyLength: Infinity,
                 RqUID: uuidGenerate(),
                 Authorization: `Bearer ${this.token.trim()}`,
                 "Content-Type": "application/json" // Явно указываем для GET
             };
-            const response = await this.api.get("/v2/models", { headers });
+            const response = await this.api.get(`${this.apiUrl}/v2/models`, { headers });
             console.log(response.data);
         } catch (error: Error | AxiosError | any) {
             logger.error({ module: "gigachat-api", msg: error?.message || "Something went wrong" });
