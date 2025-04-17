@@ -69,9 +69,9 @@ export abstract class AbstractBillService {
         console.log("RAW ADDITIONAL:", additional);
 
         const response = await gigaChatApi.parseReceipt(additional);
-        if (response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
+        if (typeof response != "string" && response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
         else {
-            const rawText = response?.text ?? response;
+            const rawText = typeof response != "string" ? response?.text : response;
             const extracted = this.extractJsonBlock(rawText);
 
             if (!extracted) {
