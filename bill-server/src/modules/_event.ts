@@ -1,5 +1,7 @@
 import { Socket } from "socket.io";
 
 export const onConnection = (socket: Socket) => {
-    socket.emit("connection", { message: "Ping" });
+    socket.on("join-bill-room", (billId) => {
+        socket.join(billId);
+    });
 };

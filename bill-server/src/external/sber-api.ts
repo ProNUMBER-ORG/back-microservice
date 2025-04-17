@@ -202,7 +202,6 @@ class GigaChat {
         });
 
         if ("msg" in response && "module" in response) return { error: response };
-        console.log("Before JSON.parse", response?.choices[0].message.content);
         return response?.choices[0].message.content;
     }
 }

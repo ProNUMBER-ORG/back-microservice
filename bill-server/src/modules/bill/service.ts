@@ -59,11 +59,6 @@ export abstract class AbstractBillService {
     }
 
     private cleanJsonString(text: string): string {
-        console.log("--------");
-        console.log(text);
-        console.log(typeof text);
-        console.log("--------");
-
         const startIndex = text.indexOf("[");
         const endIndex = text.lastIndexOf("]");
         if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) return "";
@@ -79,16 +74,11 @@ export abstract class AbstractBillService {
     async parseData(id: string, payload: { status: BillStatus; additional: string }) {
         const { status, additional } = payload;
 
-        console.log("RAW ADDITIONAL:", additional);
-
         const response = await gigaChatApi.parseReceipt(additional);
         if (typeof response != "string" && response?.error) await this.updateBill(id, { status: BillStatus.Error, error: response.error });
         else {
             const rawText = response as string;
             const extracted = this.cleanJsonString(rawText);
-
-            console.log("rawText:", rawText);
-            console.log("extracted:", extracted);
 
             if (!extracted) {
                 await this.updateBill(id, {
