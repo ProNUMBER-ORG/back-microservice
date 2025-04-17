@@ -49,12 +49,12 @@ def process_image(image_bytes: bytes) -> dict:
             config=custom_config
         )
 
-        logger.info(text)
+        print(text)
         
         # Постобработка текста
         cleaned_text = '\n'.join([line.strip() for line in text.split('\n') if line.strip()])
         
-        logger.info(cleaned_text)
+        print(cleaned_text)
 
         return {"status": "success", "additional": cleaned_text}
     except Exception as e:
