@@ -92,7 +92,7 @@ export abstract class AbstractBillService {
             try {
                 parsed = JSON.parse(extracted);
                 console.log("-----------------------------------")
-                console.log(parsed)
+                console.log(typeof parsed)
                 console.log("-----------------------------------")
                 if (!parsed) throw new Error("empty parsed result");
             } catch (err: Error | any) {
