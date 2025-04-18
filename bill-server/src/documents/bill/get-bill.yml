@@ -41,6 +41,7 @@
                       type: number
                 error:
                   type: object
+                  description: In this field you can get absolutely any form of response. But most often it is just an object with a field message string.
                   properties:
                     message:
                       type: string
