@@ -88,12 +88,12 @@ export abstract class AbstractBillService {
                 return;
             }
 
-            let parsed: { name: string; cost: number }[];
+            let parsed: Array<{ name: string; cost: number }>;
             try {
                 parsed = JSON.parse(extracted);
-                console.log("-----------------------------------")
-                console.log(typeof parsed)
-                console.log("-----------------------------------")
+                console.log("-----------------------------------");
+                console.log(parsed, parsed.length, Object.keys(parsed), !!parsed);
+                console.log("-----------------------------------");
                 if (!parsed) throw new Error("empty parsed result");
             } catch (err: Error | any) {
                 await this.updateBill(id, {
