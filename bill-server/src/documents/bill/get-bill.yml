@@ -33,7 +33,12 @@
                   type: string
                   format: uri
                 additional:
-                  type: object
+                  type: list
+                  item:
+                    name:
+                      type: string
+                    cost:
+                      type: number
                 error:
                   type: object
                   properties:

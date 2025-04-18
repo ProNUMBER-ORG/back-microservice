@@ -88,13 +88,14 @@ export abstract class AbstractBillService {
                 return;
             }
 
-            let parsed: any;
+            let parsed: { name: string; cost: number }[];
             try {
                 parsed = JSON.parse(extracted);
-            } catch (err) {
+                if (!parsed) throw new Error("empty parsed result");
+            } catch (err: Error | any) {
                 await this.updateBill(id, {
                     status: BillStatus.Error,
-                    error: `Ошибка парсинга JSON: ${(err as Error).message}`
+                    error: `Parsing error JSON: ${err.message}`
                 });
                 return;
             }
