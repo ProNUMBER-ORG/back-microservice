@@ -51,9 +51,9 @@ export abstract class AbstractBillService {
         socketSend({ to: id, event: "bill", payload: { status } });
     }
 
-    async getBill(billId: string): Promise<Bill | boolean> {
+    async getBill(billId: string): Promise<Bill | null> {
         const billFindStatus = await BillRepository.findOneBy({ id: billId });
-        if (!billFindStatus) return false;
+        if (!billFindStatus) return null;
 
         return billFindStatus;
     }

@@ -8,6 +8,6 @@ const router = Router();
 
 router.post("/upload", controller.saveBill);
 router.get("/status/:id", validate(idDto, PayloadKey.Params), controller.getBillStatus);
-router.get("/:id", validate(idDto, PayloadKey.Params), controller.getBillStatus);
+router.get("/:id", validate(idDto, PayloadKey.Params), controller.getBillData);
 
 export default router;

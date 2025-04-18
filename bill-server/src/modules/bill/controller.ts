@@ -47,7 +47,7 @@ class Controller extends BaseController {
                 res.status(404).json({ message: "BILL_NOT_FOUND" });
                 return;
             }
-            return result;
+            res.status(200).json(result);
         } catch (error) {
             this.logError(error as Error);
             res.status(500).json({ message: "Something went wrong" });
