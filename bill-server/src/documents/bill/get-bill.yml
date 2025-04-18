@@ -42,7 +42,7 @@
                 error:
                   type: object
                   properties:
-                    reason:
+                    message:
                       type: string
                       example: can not process
       "404":
