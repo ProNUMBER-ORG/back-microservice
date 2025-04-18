@@ -95,7 +95,7 @@ export abstract class AbstractBillService {
             } catch (err: Error | any) {
                 await this.updateBill(id, {
                     status: BillStatus.Error,
-                    error: `Parsing error JSON: ${err.message}`
+                    error: { message: `Parsing error JSON: ${err.message}` }
                 });
             }
         }
